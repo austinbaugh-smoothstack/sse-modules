@@ -1,4 +1,31 @@
-
+/*
+ * Instructions:
+ *   Write a Java program that prints out the following patterns:
+ *   1)
+ *   *
+ *   **
+ *   ***
+ *   ****
+ *   .........
+ *   2)
+ *   ..........
+ *   ****
+ *   ***
+ *   **
+ *   *
+ *   3)
+ *        *
+ *       ***
+ *      *****
+ *     *******
+ *   ...........
+ *   4)
+ *   ............
+ *     *******
+ *      *****
+ *       ***
+ *        *
+ */
 public class Assignment1 {
     private static final int HEIGHT = 9;
 

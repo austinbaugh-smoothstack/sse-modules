@@ -1,3 +1,9 @@
+/*
+ * Instructions:
+ *    Construct a 2D array and find the max number and show its
+ *    position in the array. 
+ */
+
 public class Assignment2 {
 	// Number of rows and columns for the 2d array
 	private static final int NUM_ROWS = 3;

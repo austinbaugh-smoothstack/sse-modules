@@ -1,5 +1,11 @@
+/*
+ * Instructions:
+ *    Take multiple values from the command line and show the result
+ *    of adding all of them.
+ */
 
 import java.util.Scanner;
+
 public class Assignment1 {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);

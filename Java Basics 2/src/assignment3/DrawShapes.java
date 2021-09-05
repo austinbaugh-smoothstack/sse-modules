@@ -1,3 +1,9 @@
+/*
+ * Instructions:
+ *   Create a Shape Interface with the methods "calculateArea" and
+ *   "display". Create a Rectangle, Circle, and Triangle class to
+ *   implement that interface.
+ */
 package assignment3;
 
 public class DrawShapes {
