@@ -7,7 +7,7 @@
 import java.util.Scanner;
 
 public class Assignment1 {
-	public static void main(String[] args) {
+	public static void main(final String[] _args) {
 		Scanner scanner = new Scanner(System.in);
 		
 		int nextNum, sum = 0;

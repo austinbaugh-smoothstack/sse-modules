@@ -36,7 +36,7 @@ public class Assignment1 {
      * @param hasRightAngle Whether or not the pattern is a right triangle
      * @param isInverted    Whether or not the pattern is inverted vertically
      */
-    private static void generatePattern(int height, boolean hasRightAngle, boolean isInverted) {
+    private static void generatePattern(final int height, final boolean hasRightAngle, boolean isInverted) {
         for (int y = 1; y <= height; y++) {
             int width = isInverted ? height - y + 1 : y;
 
@@ -58,7 +58,7 @@ public class Assignment1 {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(final String _args[]) {
         System.out.println("1)");
         generatePattern(HEIGHT, true, false);
         System.out.println("2)");

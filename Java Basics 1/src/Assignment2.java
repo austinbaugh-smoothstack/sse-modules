@@ -12,7 +12,7 @@
 import java.util.Scanner;
 
 public class Assignment2 {
-    public static void main(String[] args) {
+    public static void main(final String _args[]) {
         Scanner scanner = new Scanner(System.in);
         final int randNum = (int) (Math.random() * 100 + 1);
         int inputNum, numTries = 0;

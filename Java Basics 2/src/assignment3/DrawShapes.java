@@ -11,7 +11,7 @@ public class DrawShapes {
 	private static final int HEIGHT = 5;
 	private static final int RADIUS = 5;
 	
-	public static void main(String[] args) {
+	public static void main(final String[] _args) {
 		Rectangle rectangle = new Rectangle(WIDTH, HEIGHT);
 		System.out.println("Rectangle Info:");
 		rectangle.display();

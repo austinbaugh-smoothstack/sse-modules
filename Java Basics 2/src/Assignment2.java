@@ -76,7 +76,7 @@ public class Assignment2 {
 		return maxRow * NUM_COLS + maxCol;
 	}
 	
-	public static void main(String[] args) {
+	public static void main(final String[] _args) {
 		// Generate 2d array of random integers
 		final int table[][] = generate2dArray();
 
