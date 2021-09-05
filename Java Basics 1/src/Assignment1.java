@@ -28,7 +28,6 @@ public class Assignment1 {
                 System.out.print('*');
             }
             System.out.print('\n');
-            ;
         }
     }
 
