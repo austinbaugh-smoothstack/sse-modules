@@ -13,19 +13,19 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class Assignment2 {
-	final static String DEFAULT_FILE = "assignment-2-output.txt";
+	final static String DEFAULT_FILE_PATH = "assignment-2-output.txt";
 	final static String DEFAULT_ADDITION = "concatenated string\n";
 	
 	public static void main(String[] args) throws IOException {
-		final String path = args.length != 0 ? args[0] : DEFAULT_FILE;
+		final String path = args.length > 0 ? args[0] : DEFAULT_FILE_PATH;
 		// args = args[1::]
 		if(args.length > 1) {
 			args = Arrays.copyOfRange(args, 1, args.length - 1);
 		}
 		final String addition = args.length > 1 ? String.join(" ", args) : DEFAULT_ADDITION;
 		
-		final FileWriter fileWriter = new FileWriter(path, true);
-		fileWriter.write(addition);
-		fileWriter.close();
+		final FileWriter writer = new FileWriter(path, true);
+		writer.write(addition);
+		writer.close();
 	}
 }

@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class Assignment1 {
+	private static final String DEFAULT_PATH = System.getProperty("user.dir");
 	/**
 	 * Recurisvely lists directory contents
 	 * 
@@ -34,7 +35,7 @@ public class Assignment1 {
 	}
 	
 	public static void main(final String[] args) throws IOException {
-		final String path = args.length == 0 ? System.getProperty("user.dir") : args[0];
+		final String path = args.length > 0 ? args[0] : DEFAULT_PATH;
 		ls(new File(path), 0);
 	}
 }
