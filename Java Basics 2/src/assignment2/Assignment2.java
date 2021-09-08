@@ -1,3 +1,4 @@
+package assignment2;
 /*
  * Instructions:
  *    Construct a 2D array and find the max number and show its
@@ -77,23 +78,19 @@ public class Assignment2 {
 	}
 	
 	public static void main(final String[] _args) {
-		// Generate 2d array of random integers
 		final int table[][] = generate2dArray();
 
-		// Print info about 2d array
 		System.out.println("Random 2D array:");
 		print2dArray(table);
-		System.out.println("Num rows: " + NUM_ROWS);
-		System.out.println("Num columns: " + NUM_COLS);
 		
-		// Print max num's row & column index
 		final int absoluteIndex = findIndexOfMaxNum(table);
 		final int row = absoluteIndex / NUM_COLS + 1;
 		final int col = absoluteIndex % NUM_COLS + 1;
-		final int maxNum = table[row - 1][col - 1];
+		final int value = table[row - 1][col - 1];
 		System.out.println();
-		System.out.println("Row: " + row);
-		System.out.println("Column: " + col);
-		System.out.println("Max number: " + maxNum);
+		System.out.println("Max number info:");
+		System.out.println("- Row: " + row);
+		System.out.println("- Column: " + col);
+		System.out.println("- Value: " + value);
 	}
 }

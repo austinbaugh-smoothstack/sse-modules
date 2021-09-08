@@ -1,3 +1,4 @@
+package assignment1;
 /*
  * Instructions:
  *    Take multiple values from the command line and show the result

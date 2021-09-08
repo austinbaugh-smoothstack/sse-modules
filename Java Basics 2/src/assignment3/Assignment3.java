@@ -6,7 +6,7 @@
  */
 package assignment3;
 
-public class DrawShapes {
+public class Assignment3 {
 	private static final int WIDTH = 8;
 	private static final int HEIGHT = 5;
 	private static final int RADIUS = 5;

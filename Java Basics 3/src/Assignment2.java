@@ -1,13 +1,14 @@
 /*
  * File info:
  *   Without arguments passed, this file will concatenate the
- *   string in DEFAULT_ADDITION to the file DEFAULT_FILE.
- *   With an optional single argument, a different target file can be specified
+ *   string in DEFAULT_ADDITION to the file DEFAULT_FILE_PATH.
+ *   With an optional single argument, a different output file can be specified
  *   With an optional second argument, a different string can be specified
  *   
  * Instructions:
  *   Write a Java program to append text to an existing file.
  */
+
 import java.util.Arrays;
 import java.io.FileWriter;
 import java.io.IOException;

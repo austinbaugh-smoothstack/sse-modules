@@ -1,11 +1,9 @@
 /*
  * File info:
- *   * Without arguments passed, this file will concatenate the
- *     string in DEFAULT_ADDITION to the file DEFAULT_FILE.
- *   * With an optional single argument, a different target file
- *     can be specified
- *   * With an optional second argument, a different string can
- *     be specified
+ *   Without arguments passed, this file will print the number of occurrances
+ *   of DEFAULT_CHAR in the contents of DEFAULT_FILE_PATH;
+ *   With an optional single argument, a different input file can be specified
+ *   With an optional second argument, a different character can be counted
  *   
  * Instructions:
  *    Write a Java program that counts the number of times a particular
@@ -25,6 +23,7 @@ public class Assignment3 {
 		final String path = args.length > 0 ? args[0] : DEFAULT_FILE_PATH;
 		final char character = args.length > 1 ? args[1].charAt(0) : DEFAULT_CHAR;
 		final BufferedReader reader = new BufferedReader(new FileReader(path));
+		
 		int totalOccurances = 0;
 		// The current character being compared from the file
 		int c;
