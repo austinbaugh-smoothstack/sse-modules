@@ -1,4 +1,4 @@
-package assignement4;
+package assignment4;
 
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;

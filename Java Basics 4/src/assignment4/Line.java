@@ -1,4 +1,4 @@
-package assignement4;
+package assignment4;
 
 public class Line {
 	private double x0, x1, y0, y1;
