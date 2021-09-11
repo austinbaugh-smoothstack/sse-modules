@@ -16,9 +16,16 @@ public class SQL {
         try {
             conn = (Connection) DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
             
+            // Problems 1 & 2
             final String bookTitle = "The Lost Tribe";
+            // Problems 1 & 4
             final String branchName = "Sharpstown";
+            // Problem 4
             final String dueDate = "2018-04-08 17:39:24";
+            // Problem 7
+            final String authorName = "Stephen King";
+            // Problem 7
+            final String branchName2 = "Central";
             
             System.out.println("Problem 1:");
             String query = "SELECT noOfCopies "
@@ -75,8 +82,8 @@ public class SQL {
             System.out.println("Books due " + dueDate + " at " + branchName + " library branch with their corresponding borrower's name and address:");
             while(resultSet.next()) {
                 System.out.print(resultSet.getString("title") + ": ");
-                System.out.print(resultSet.getString("name") + " - ");
-                System.out.print(resultSet.getString("address"));
+                System.out.print(resultSet.getString("name") + " (");
+                System.out.print(resultSet.getString("address") + ")");
                 System.out.println();
             }
             System.out.println();
@@ -96,6 +103,37 @@ public class SQL {
             }
             System.out.println();
             
+            System.out.println("Problem 6:");
+            query = "SELECT name, address, COUNT(*) AS count "
+                + "FROM tbl_book_loans "
+                + "INNER JOIN tbl_borrower ON tbl_borrower.cardNo = tbl_book_loans.cardNo "
+                + "GROUP BY name "
+                + "HAVING count > 5";
+            preparedStatement = conn.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()) {
+                System.out.print(resultSet.getString("name") + " (");
+                System.out.print(resultSet.getString("address") + "): ");
+                System.out.print(resultSet.getString("count"));
+                System.out.println();
+            }
+            System.out.println();
+            
+            System.out.println("Problem 7:");
+            query = "SELECT title, noOfCopies "
+                + "FROM tbl_book "
+                + "INNER JOIN tbl_author ON tbl_author.authorId = tbl_book.authId "
+                + "INNER JOIN tbl_book_copies ON tbl_book_copies.bookId = tbl_book.bookId "
+                + "INNER JOIN tbl_library_branch ON tbl_library_branch.branchId = tbl_book_copies.branchId "
+                + "WHERE authorName=? AND branchName=?";
+            preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setString(1, authorName);
+            preparedStatement.setString(2, branchName2);
+            resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()) {
+                System.out.println(resultSet.getString("title") + ": " + resultSet.getString("noOfCopies"));
+            }
+            System.out.println();
         } catch(final SQLException e) {
             e.printStackTrace();
         } finally {
