@@ -62,6 +62,7 @@ class LibrarianBranch extends MenuItem {
                         Menu.putMenu(menuType, menu);
                         Menu.prompt(menuType);
                     } else {
+                        service.updateBookCopies(branch, book);
                         Menu.prompt(MenuType.LIB_BRANCH);
                     }
                 } catch (final SQLException exception) {
