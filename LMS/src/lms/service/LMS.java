@@ -20,7 +20,6 @@ public class LMS {
         Menu.putMenu(MenuType.LIB_MAIN, libMenu);
         
         final List<MenuItem> adminCommands = new ArrayList<MenuItem>();
-        
         adminCommands.add(new AdminOperation("Books",            AdminOperationTarget.BOOK));
         adminCommands.add(new AdminOperation("Authors",          AdminOperationTarget.AUTHOR));
         adminCommands.add(new AdminOperation("Genres",           AdminOperationTarget.GENRE));
@@ -28,7 +27,6 @@ public class LMS {
         adminCommands.add(new AdminOperation("Library Branches", AdminOperationTarget.BRANCH));
         adminCommands.add(new AdminOperation("Borrowers",        AdminOperationTarget.BORROWER));
         adminCommands.add(new GoToMenu("Over-ride Due Date for a Book Loan", MenuType.ADMIN_LOAN));
-        
         final Menu adminMenu = new Menu(null, adminCommands, MenuType.MAIN);
         Menu.putMenu(MenuType.ADMIN_MAIN, adminMenu);
         

@@ -38,14 +38,14 @@ public class BookDAO extends BaseDAO<Book> {
     }
 
     public void insert(final Book book) throws SQLException {
-        final String query = "insert into tbl_book (bookTitle, pubId) values (?, ?)";
-        final Object[] values = { book.getTitle(), book.getPublisher().getId() };
+        final String query = "insert into tbl_book (title, authId, pubId) values (?, ?, ?)";
+        final Object[] values = { book.getTitle(), book.getAuthor().getId(), book.getPublisher().getId() };
         save(query, values);
     }
 
     public void update(final Book book) throws SQLException {
-        final String query = "update tbl_book set title = ?, pubId = ? where bookId = ?";
-        final Object[] values = { book.getTitle(), book.getPublisher().getId(), book.getId() };
+        final String query = "update tbl_book set title = ?, authId = ?, pubId = ? where bookId = ?";
+        final Object[] values = { book.getTitle(), book.getAuthor().getName(), book.getPublisher().getId(), book.getId() };
         save(query, values);
     }
 
