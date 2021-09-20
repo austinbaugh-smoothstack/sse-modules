@@ -29,8 +29,9 @@ public class PublisherDAO extends BaseDAO<Publisher> {
     }
 
     public void insert(final Publisher publisher) throws SQLException {
-        final String query = "insert into tbl_publisher (publisherName, publisherAddress, publisherPhone) values (?, ?, ?)";
-        final Object[] values = { publisher.getName(), publisher.getAddress(), publisher.getPhone() };
+        publisher.setId(selectCount() + 1);
+        final String query = "insert into tbl_publisher (publisherId, publisherName, publisherAddress, publisherPhone) values (?, ?, ?, ?)";
+        final Object[] values = { publisher.getId(), publisher.getName(), publisher.getAddress(), publisher.getPhone() };
         save(query, values);
     }
 

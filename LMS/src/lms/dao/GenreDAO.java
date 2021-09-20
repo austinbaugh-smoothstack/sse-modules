@@ -27,8 +27,9 @@ public class GenreDAO extends BaseDAO<Genre> {
     }
 
     public void insert(final Genre genre) throws SQLException {
-        final String query = "insert into tbl_genre (genre_name) values (?)";
-        final Object[] values = { genre.getName() };
+        genre.setId(selectCount() + 1);
+        final String query = "insert into tbl_genre (genre_id, genre_name) values (?, ?)";
+        final Object[] values = { genre.getId(), genre.getName() };
         save(query, values);
     }
 

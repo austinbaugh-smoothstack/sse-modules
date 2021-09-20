@@ -27,8 +27,9 @@ public class AuthorDAO extends BaseDAO<Author> {
     }
 
     public void insert(final Author author) throws SQLException {
-        final String query = "insert into tbl_author (authorName) values (?)";
-        final Object[] values = { author.getName() };
+        author.setId(selectCount() + 1);
+        final String query = "insert into tbl_author (authorId, authorName) values (?, ?)";
+        final Object[] values = { author.getId(), author.getName() };
         save(query, values);
     }
 
@@ -49,11 +50,5 @@ public class AuthorDAO extends BaseDAO<Author> {
         final Object[] values = { id };
         final List<Author> result = read(query, values);
         return result.isEmpty() ? null : result.get(0);
-    }
-
-    public List<Author> selectAllByBookId(final Integer bookId) throws SQLException {
-        final String query = "select * from tbl_author inner join tbl_book_authors on tbl_author.authorId = tbl_book_authors.authorId where bookId = ?";
-        final Object[] values = { bookId };
-        return read(query, values);
     }
 }

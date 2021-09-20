@@ -29,8 +29,9 @@ public class BorrowerDAO extends BaseDAO<Borrower> {
     }
 
     public void insert(final Borrower borrower) throws SQLException {
-        final String query = "insert into tbl_borrower (name, address, phone) values (?, ?, ?)";
-        final Object[] values = { borrower.getName(), borrower.getAddress(), borrower.getPhone() };
+        borrower.setCardNumber(selectCount() + 1);
+        final String query = "insert into tbl_borrower (cardNo, name, address, phone) values (?, ?, ?, ?)";
+        final Object[] values = { borrower.getCardNumber(), borrower.getName(), borrower.getAddress(), borrower.getPhone() };
         save(query, values);
     }
 

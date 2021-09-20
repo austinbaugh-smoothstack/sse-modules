@@ -46,4 +46,11 @@ public abstract class BaseDAO<T> {
     public List<T> selectAll() throws SQLException {
         return read("select * from " + table, new Object[] {});
     }
+
+    public Integer selectCount() throws SQLException {
+        final PreparedStatement statement = connection.prepareStatement("select count(*) from " + table);
+        final ResultSet resultSet = statement.executeQuery();
+        
+        return resultSet.next() ? resultSet.getInt(1) : 0;
+    }
 }

@@ -38,8 +38,9 @@ public class BookDAO extends BaseDAO<Book> {
     }
 
     public void insert(final Book book) throws SQLException {
-        final String query = "insert into tbl_book (title, authId, pubId) values (?, ?, ?)";
-        final Object[] values = { book.getTitle(), book.getAuthor().getId(), book.getPublisher().getId() };
+        book.setId(selectCount() + 1);
+        final String query = "insert into tbl_book (bookId, title, authId, pubId) values (?, ?, ?, ?)";
+        final Object[] values = { book.getId(), book.getTitle(), book.getAuthor().getId(), book.getPublisher().getId() };
         save(query, values);
     }
 
