@@ -29,14 +29,18 @@ class LibrarianService {
             if(branchName.equalsIgnoreCase("quit")) {
                 return;
             } else if(!branchName.equalsIgnoreCase("n/a")) {
-                System.out.println("Please enter new branch address or enter N/A for no change:");
-                final String branchAddress = ScannerUtil.getInput();
-                if(branchAddress.equalsIgnoreCase("quit")) {
-                    return;
-                } else if(!branchAddress.equalsIgnoreCase("n/a")) {
-                    branch.setName(branchName);
-                    branch.setAddress(branchAddress);
-                }
+                branch.setName(branchName);
+            }
+            
+            System.out.println("Please enter new branch address or enter N/A for no change:");
+            final String branchAddress = ScannerUtil.getInput();
+            if(branchAddress.equalsIgnoreCase("quit")) {
+                return;
+            } else if(!branchAddress.equalsIgnoreCase("n/a")) {
+                branch.setAddress(branchAddress);
+            }
+            
+            if(!branchName.equalsIgnoreCase("n/a") || branchAddress.equalsIgnoreCase("n/a")) {
                 branchDao.update(branch);
                 connection.commit();
             }
