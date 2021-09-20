@@ -18,11 +18,8 @@ enum MenuType {
     
     // Administrator
     ADMIN_MAIN,
-    ADMIN_OPERATION,
     ADMIN_LOAN,
     //ADMIN_LOAN_BOOK, TODO implement
     //ADMIN_LOAN_BRANCH, TODO implement
     ADMIN_LOAN_BORROWER,
-    ADMIN_LOAN_DUEDATE,
-    ADMIN_LOAN_DUEDATE_OVERRIDE,
 }

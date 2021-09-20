@@ -5,17 +5,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import lms.dao.AuthorDAO;
 import lms.dao.BookDAO;
+import lms.dao.BookLoanDAO;
 import lms.dao.BorrowerDAO;
 import lms.dao.GenreDAO;
 import lms.dao.LibraryBranchDAO;
 import lms.dao.PublisherDAO;
 import lms.domain.Author;
 import lms.domain.Book;
+import lms.domain.BookLoan;
 import lms.domain.Borrower;
 import lms.domain.Genre;
 import lms.domain.LibraryBranch;
@@ -476,6 +479,19 @@ class AdminService {
             connection.close();
         }
     }
+    void updateBookLoan(final BookLoan bookLoan) throws SQLException {
+        Connection connection = connUtil.getConnection();
+        final BookLoanDAO bookLoanDao = new BookLoanDAO(connection);
+        try {
+            bookLoanDao.update(bookLoan);
+            connection.commit();
+        } catch (final SQLException exception) {
+            System.out.println(exception);
+            connection.rollback();
+        } finally {
+            connection.close();
+        }
+    }
     
     List<Book> readAllBooks() throws SQLException {
         Connection connection = connUtil.getConnection();
@@ -562,4 +578,25 @@ class AdminService {
         }
         return Collections.emptyList();
     }
+    Set<BookLoan> readBookLoansByBorrower(final Borrower borrower) throws SQLException {
+        Connection connection = connUtil.getConnection();
+        final BookLoanDAO bookLoanDao = new BookLoanDAO(connection);
+        try {
+            final Set<BookLoan> bookLoans = bookLoanDao
+                .selectAllByBorrowerCardNumber(borrower.getCardNumber())
+                .stream()
+                .peek(bookCopy -> bookCopy.setBorrower(borrower))
+                .collect(Collectors.toSet());
+            borrower.setBookLoans(bookLoans);
+            
+            return bookLoans;
+        } catch (final SQLException exception) {
+            System.out.println(exception);
+            connection.rollback();
+        } finally {
+            connection.close();
+        }
+        return Collections.emptySet();
+    }
+            
 }
