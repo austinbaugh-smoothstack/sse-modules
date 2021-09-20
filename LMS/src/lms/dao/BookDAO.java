@@ -46,7 +46,7 @@ public class BookDAO extends BaseDAO<Book> {
 
     public void update(final Book book) throws SQLException {
         final String query = "update tbl_book set title = ?, authId = ?, pubId = ? where bookId = ?";
-        final Object[] values = { book.getTitle(), book.getAuthor().getName(), book.getPublisher().getId(), book.getId() };
+        final Object[] values = { book.getTitle(), book.getAuthor().getId(), book.getPublisher().getId(), book.getId() };
         save(query, values);
     }
 
