@@ -38,7 +38,7 @@ public class BookDAO extends BaseDAO<Book> {
     }
 
     public void insert(final Book book) throws SQLException {
-        book.setId(selectCount() + 1);
+        book.setId(nextId("bookId"));
         final String query = "insert into tbl_book (bookId, title, authId, pubId) values (?, ?, ?, ?)";
         final Object[] values = { book.getId(), book.getTitle(), book.getAuthor().getId(), book.getPublisher().getId() };
         save(query, values);

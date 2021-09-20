@@ -28,7 +28,7 @@ public class LibraryBranchDAO extends BaseDAO<LibraryBranch> {
     }
 
     public void insert(final LibraryBranch branch) throws SQLException {
-        branch.setId(selectCount() + 1);
+        branch.setId(nextId("branchId"));
         final String query = "insert into tbl_library_branch (branchId, branchName, branchAddress) values (?, ?, ?)";
         final Object[] values = { branch.getId(), branch.getName(), branch.getAddress() };
         save(query, values);

@@ -29,7 +29,7 @@ public class BorrowerDAO extends BaseDAO<Borrower> {
     }
 
     public void insert(final Borrower borrower) throws SQLException {
-        borrower.setCardNumber(selectCount() + 1);
+        borrower.setCardNumber(nextId("cardNo"));
         final String query = "insert into tbl_borrower (cardNo, name, address, phone) values (?, ?, ?, ?)";
         final Object[] values = { borrower.getCardNumber(), borrower.getName(), borrower.getAddress(), borrower.getPhone() };
         save(query, values);

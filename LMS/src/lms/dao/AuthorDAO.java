@@ -27,7 +27,7 @@ public class AuthorDAO extends BaseDAO<Author> {
     }
 
     public void insert(final Author author) throws SQLException {
-        author.setId(selectCount() + 1);
+        author.setId(nextId("authorId"));
         final String query = "insert into tbl_author (authorId, authorName) values (?, ?)";
         final Object[] values = { author.getId(), author.getName() };
         save(query, values);
