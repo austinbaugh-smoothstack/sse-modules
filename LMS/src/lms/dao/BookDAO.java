@@ -29,7 +29,7 @@ public class BookDAO extends BaseDAO<Book> {
     }
 
     public BookDAO(final Connection connection) {
-        super(connection);
+        super(connection, "tbl_book");
     }
 
     public void insert(final Book book) throws SQLException {
@@ -48,10 +48,6 @@ public class BookDAO extends BaseDAO<Book> {
         final String query = "delete from tbl_book where bookId = ?";
         final Object[] values = { book.getId() };
         save(query, values);
-    }
-
-    public List<Book> selectAll() throws SQLException {
-        return read("select * from tbl_book", new Object[]{});
     }
 
     public Book selectById(final Integer id) throws SQLException {

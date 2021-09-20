@@ -32,10 +32,10 @@ class BorrowerService {
             final BorrowerDAO borrowerDao = new BorrowerDAO(connection);
             final BookLoanDAO bookLoanDao = new BookLoanDAO(connection);
             
-            Borrower borrower = borrowerDao.selectByCardNumber(Integer.parseInt(LMS.getInput()));
+            Borrower borrower = borrowerDao.selectByCardNumber(Integer.parseInt(ScannerUtil.getInput()));
             while(borrower == null) {
                 System.out.println("Not a valid card number, please try again");
-                borrower = borrowerDao.selectByCardNumber(Integer.parseInt(LMS.getInput()));
+                borrower = borrowerDao.selectByCardNumber(Integer.parseInt(ScannerUtil.getInput()));
             }
             
             final Borrower finalBorrower = borrower;
@@ -44,7 +44,6 @@ class BorrowerService {
                     .stream()
                     .peek(bookCopy -> bookCopy.setBorrower(finalBorrower))
                     .collect(Collectors.toSet());
-            borrower.setBookLoans(bookLoans);
             
             return finalBorrower;
         } catch (final SQLException exception) {
@@ -88,7 +87,7 @@ class BorrowerService {
             bookLoan.setBranch(bookCopy.getBranch());
             bookLoan.setBook(bookCopy.getBook());
             
-            final ZonedDateTime today = LocalDate.now().atStartOfDay(ZoneId.systemDefault());
+            final ZonedDateTime today = ZonedDateTime.now(ZoneId.systemDefault());
             final Date dateOut = Date.from(today.toInstant());
             bookLoan.setDateOut(new Timestamp(dateOut.getTime()));
             
@@ -97,9 +96,15 @@ class BorrowerService {
             
             bookLoanDao.insert(bookLoan);
             
+            // Update number of copies at the library
             final LibrarianService service = new LibrarianService();
             final int numberOfCopies = bookCopy.getNumberOfCopies() - 1;
             service.updateBookCopies(bookCopy, numberOfCopies, connection);
+            
+            // Add book loan to borrower
+            Set<BookLoan> loans = borrower.getBookLoans();
+            loans.add(bookLoan);
+            borrower.setBookLoans(loans);
             
             connection.commit();
         } catch (final SQLException exception) {

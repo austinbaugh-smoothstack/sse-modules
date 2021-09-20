@@ -23,7 +23,7 @@ public class AuthorDAO extends BaseDAO<Author> {
     }
 
     public AuthorDAO(final Connection connection) {
-        super(connection);
+        super(connection, "tbl_author");
     }
 
     public void insert(final Author author) throws SQLException {
@@ -42,10 +42,6 @@ public class AuthorDAO extends BaseDAO<Author> {
         final String query = "delete from tbl_author where authorId = ?";
         final Object[] values = { author.getId() };
         save(query, values);
-    }
-
-    public List<Author> selectAll() throws SQLException {
-        return read("select * from tbl_author", new Object[] {});
     }
 
     public Author selectById(final Integer id) throws SQLException {

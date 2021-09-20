@@ -1,11 +1,22 @@
 package lms.service;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Scanner;
+import java.util.Map;
 
 class Menu {
     
     private String title;
     private List<MenuItem> items;
+    
+    private static Map<MenuType, Menu> menus = new HashMap<MenuType, Menu>();
+    
+    static void prompt(final MenuType menuType) {
+        menus.get(menuType).prompt();
+    }
+    
+    static void putMenu(final MenuType menuType, final Menu menu) {
+        menus.put(menuType, menu);
+    }
     
     Menu(final String title, final List<MenuItem> items, final MenuType previous) {
         this.title = title;
@@ -15,7 +26,7 @@ class Menu {
         }
     }
     
-    protected void prompt(final Scanner scanner) {
+    protected void prompt() {
         if(title != null) {
             System.out.println(title);
         }
@@ -25,10 +36,8 @@ class Menu {
         }
         System.out.println();
         
-        if(scanner.hasNextInt()) {
-            final int itemIndex = scanner.nextInt() - 1;
-            items.get(itemIndex).action();
-        }
+        final int itemIndex = Integer.parseInt(ScannerUtil.getInput()) - 1;
+        items.get(itemIndex).action();
         
     }
 }

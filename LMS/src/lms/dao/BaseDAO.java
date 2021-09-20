@@ -9,6 +9,7 @@ import java.util.List;
 public abstract class BaseDAO<T> {
     
     private Connection connection;
+    private String table;
     
     protected Connection getConnection() {
         return connection;
@@ -37,7 +38,12 @@ public abstract class BaseDAO<T> {
     
     protected abstract List<T> extractData(final ResultSet resultSet) throws SQLException;
     
-    public BaseDAO(final Connection connection) {
+    public BaseDAO(final Connection connection, final String table) {
         this.connection = connection;
+        this.table = table;
+    }
+
+    public List<T> selectAll() throws SQLException {
+        return read("select * from " + table, new Object[] {});
     }
 }

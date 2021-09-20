@@ -7,31 +7,19 @@ import java.util.List;
 
 import lms.dao.AuthorDAO;
 import lms.dao.BookDAO;
+import lms.dao.BorrowerDAO;
 import lms.dao.GenreDAO;
+import lms.dao.LibraryBranchDAO;
+import lms.dao.PublisherDAO;
+import lms.domain.Author;
 import lms.domain.Book;
+import lms.domain.Borrower;
+import lms.domain.Genre;
+import lms.domain.LibraryBranch;
+import lms.domain.Publisher;
 
 class AdminService {
     private ConnectionUtil connUtil = new ConnectionUtil();
-    
-    void addBook() throws SQLException {
-        final Book book = new Book();
-        System.out.println("Book title:");
-        book.setTitle(LMS.getInput());
-        // TODO select publisher, author, and genres
-        
-        Connection connection = connUtil.getConnection();
-        try {
-            final BookDAO bookDao = new BookDAO(connection);
-            //publisherDao.save(publisher)
-            //bookDao.addBook(book);
-            connection.commit();
-        } catch (final SQLException exception) {
-            System.out.println(exception);
-            connection.rollback();
-        } finally {
-            connection.close();
-        }
-    }
     
     List<Book> readAllBooks() throws SQLException {
         Connection connection = connUtil.getConnection();
@@ -56,33 +44,68 @@ class AdminService {
         return Collections.emptyList();
     }
     
-    void updateBook() throws SQLException {
+    List<Author> readAllAuthors() throws SQLException {
         Connection connection = connUtil.getConnection();
         try {
-            final BookDAO bookDao = new BookDAO(connection);
-            // TODO update book
-            final Book book = new Book();
-            bookDao.update(book);
+            return new AuthorDAO(connection).selectAll();
         } catch (final SQLException exception) {
             System.out.println(exception);
             connection.rollback();
         } finally {
             connection.close();
         }
+        return Collections.emptyList();
     }
     
-    void deleteBook() throws SQLException {
+    List<Genre> readAllGenres() throws SQLException {
         Connection connection = connUtil.getConnection();
         try {
-            final BookDAO bookDao = new BookDAO(connection);
-            // TODO delete book
-            final Book book = new Book();
-            bookDao.delete(book);
+            return new GenreDAO(connection).selectAll();
         } catch (final SQLException exception) {
             System.out.println(exception);
             connection.rollback();
         } finally {
             connection.close();
         }
+        return Collections.emptyList();
+    }
+    
+    List<Publisher> readAllPublishers() throws SQLException {
+        Connection connection = connUtil.getConnection();
+        try {
+            return new PublisherDAO(connection).selectAll();
+        } catch (final SQLException exception) {
+            System.out.println(exception);
+            connection.rollback();
+        } finally {
+            connection.close();
+        }
+        return Collections.emptyList();
+    }
+    
+    List<LibraryBranch> readAllBranches() throws SQLException {
+        Connection connection = connUtil.getConnection();
+        try {
+            return new LibraryBranchDAO(connection).selectAll();
+        } catch (final SQLException exception) {
+            System.out.println(exception);
+            connection.rollback();
+        } finally {
+            connection.close();
+        }
+        return Collections.emptyList();
+    }
+    
+    List<Borrower> readAllBorrowers() throws SQLException {
+        Connection connection = connUtil.getConnection();
+        try {
+            return new BorrowerDAO(connection).selectAll();
+        } catch (final SQLException exception) {
+            System.out.println(exception);
+            connection.rollback();
+        } finally {
+            connection.close();
+        }
+        return Collections.emptyList();
     }
 }

@@ -25,7 +25,7 @@ public class PublisherDAO extends BaseDAO<Publisher> {
     }
 
     public PublisherDAO(final Connection connection) {
-        super(connection);
+        super(connection, "tbl_publisher");
     }
 
     public void insert(final Publisher publisher) throws SQLException {
@@ -44,10 +44,6 @@ public class PublisherDAO extends BaseDAO<Publisher> {
         final String query = "delete from tbl_publisher where publisherId = ?";
         final Object[] values = { publisher.getId() };
         save(query, values);
-    }
-
-    public List<Publisher> selectAll() throws SQLException {
-        return read("select * from tbl_publisher", null);
     }
 
     public Publisher selectById(final Integer id) throws SQLException {

@@ -12,6 +12,7 @@ enum MenuType {
     
     // Borrower
     BORR_MAIN,
+    BORR_LOAN,
     BORR_LOAN_CHECKOUT,
     BORR_LOAN_RETURN,
     

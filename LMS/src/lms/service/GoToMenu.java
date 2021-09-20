@@ -32,11 +32,12 @@ class GoToMenu extends MenuItem {
                     
                     final List<LibraryBranch> branches = service.readAllBranches();
                     for(final LibraryBranch branch : branches) {
-                        menuItems.add(new LibrarianOperation(branch.getName() + ", " + branch.getAddress(), MenuType.LIB_BRANCH, branch, null));
+                        menuItems.add(new LibrarianBranch(branch.getName() + ", " + branch.getAddress(), MenuType.LIB_BRANCH, branch, null));
                     }
                     
                     final Menu menu = new Menu(null, menuItems, MenuType.LIB_MAIN);
-                    LMS.putMenu(MenuType.LIB_BRANCH, menu);
+                    Menu.putMenu(MenuType.LIB_BRANCH, menu);
+                    Menu.prompt(MenuType.LIB_BRANCH);
                 } catch (final SQLException exception) {
                     exception.printStackTrace();
                 }
@@ -47,18 +48,19 @@ class GoToMenu extends MenuItem {
                     final Borrower borrower = service.readBorrowerByCardNumber();
                     final List<MenuItem> menuItems = new ArrayList<MenuItem>();
                     
-                    menuItems.add(new BorrowerOperation("Check out a book", MenuType.BORR_LOAN_CHECKOUT, borrower));
-                    menuItems.add(new BorrowerOperation("Return a book", MenuType.BORR_LOAN_RETURN, borrower));
+                    menuItems.add(new BorrowerLoan("Check out a book", MenuType.BORR_LOAN_CHECKOUT, borrower));
+                    menuItems.add(new BorrowerLoan("Return a book", MenuType.BORR_LOAN_RETURN, borrower));
                     
                     final Menu menu = new Menu(null, menuItems, MenuType.MAIN);
-                    LMS.putMenu(MenuType.BORR_MAIN, menu);
+                    Menu.putMenu(MenuType.BORR_LOAN, menu);
+                    Menu.prompt(MenuType.BORR_LOAN);
                 } catch (final SQLException exception) {
                     exception.printStackTrace();
                 }
                 break;
             default:
+                Menu.prompt(menuType);
                 break;
         }
-        LMS.prompt(menuType);
     }
 }

@@ -1,5 +1,6 @@
 package lms.domain;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class Borrower {
@@ -7,7 +8,7 @@ public class Borrower {
     private String name;
     private String address;
     private String phone;
-    private Set<BookLoan> bookLoans;
+    private Set<BookLoan> bookLoans = new HashSet<BookLoan>();
     
     public Integer getCardNumber() {
         return cardNumber;

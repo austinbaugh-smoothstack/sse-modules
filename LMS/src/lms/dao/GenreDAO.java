@@ -23,7 +23,7 @@ public class GenreDAO extends BaseDAO<Genre> {
     }
 
     public GenreDAO(final Connection connection) {
-        super(connection);
+        super(connection, "tbl_genre");
     }
 
     public void insert(final Genre genre) throws SQLException {
@@ -42,10 +42,6 @@ public class GenreDAO extends BaseDAO<Genre> {
         final String query = "delete from tbl_genre where genre_id = ?";
         final Object[] values = { genre.getId() };
         save(query, values);
-    }
-
-    public List<Genre> selectAll() throws SQLException {
-        return read("select * from tbl_genre", new Object[]{});
     }
 
     public Genre selectById(final Integer id) throws SQLException {

@@ -10,7 +10,6 @@ class Table {
     
     private int[] columnWidths;
     private String[] columnHeaders;
-    private List<String[]> values = Collections.emptyList();
     
     Table(final int[] columnWidths, final String[] columnHeaders) {
         this.columnWidths = columnWidths;
@@ -18,11 +17,11 @@ class Table {
     }
     
     /**
-     * Constructs a List<String[]> from a List<Object[]>, applying a max width for each table value based on its column width
-     * @param values Objects to be displayed in the table
+     * Prints the entire table with dashes making borders and a header
+     * @param tableValues Constructs a List<String[]> from a List<Object[]>, applying a max width for each table value based on its column width
      */
-    void setValues(final List<Object[]> values) {
-        this.values = values.stream().map(rowValues -> {
+    void print(final List<Object[]> values) {
+        final List<String[]> tableValues = values.stream().map(rowValues -> {
             String[] row = new String[rowValues.length];
             int columnIndex = 0;
             for(final Object value : Arrays.asList(rowValues)) {
@@ -34,25 +33,22 @@ class Table {
             }
             return row;
         }).collect(Collectors.toList());
-    }
-
-    /**
-     * Prints the entire table with dashes making borders and a header
-     */
-    @Override
-    public String toString() {
         // Repeating dashes equal to the total width of the table
-        final String border = "-".repeat(IntStream.of(columnWidths).sum() + columnWidths.length - 1) + System.lineSeparator();
+        final String border = "-".repeat(IntStream.of(columnWidths).sum() + columnWidths.length - 1);
         // Specifies the column widths in the format used for each row (i.e. "%5s %20s %15s")
         final String rowFormat = Arrays.stream(columnWidths)
             .boxed()
             .map(width -> "%" + String.valueOf(width) + "s")
             .collect(Collectors.joining(" ", "", " %n"));
         // Table
-        return border
-            + String.format(rowFormat, (Object[]) columnHeaders)
-            + border
-            + values.stream().map(row -> String.format(rowFormat, (Object[]) row)).collect(Collectors.joining())
-            + border;
+        System.out.println(border);
+        System.out.print(String.format(rowFormat, (Object[]) columnHeaders));
+        System.out.println(border);
+        if(tableValues.isEmpty()) {
+            System.out.println("(no records)");
+        } else {
+            tableValues.stream().forEach(row -> System.out.format(rowFormat, (Object[]) row));
+        }
+        System.out.println(border);
     }
 }

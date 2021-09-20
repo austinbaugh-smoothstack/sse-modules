@@ -24,7 +24,7 @@ public class LibraryBranchDAO extends BaseDAO<LibraryBranch> {
     }
 
     public LibraryBranchDAO(final Connection connection) {
-        super(connection);
+        super(connection, "tbl_library_branch");
     }
 
     public void insert(final LibraryBranch branch) throws SQLException {
@@ -43,10 +43,6 @@ public class LibraryBranchDAO extends BaseDAO<LibraryBranch> {
         final String query = "delete from tbl_library_branch where branchId = ?";
         final Object[] values = { branch.getId() };
         save(query, values);
-    }
-
-    public List<LibraryBranch> selectAll() throws SQLException {
-        return read("select * from tbl_library_branch", new Object[]{});
     }
 
     public LibraryBranch selectById(final Integer id) throws SQLException {

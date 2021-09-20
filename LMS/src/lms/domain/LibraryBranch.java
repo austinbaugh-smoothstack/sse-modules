@@ -1,13 +1,14 @@
 package lms.domain;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class LibraryBranch {
     private Integer id;
     private String name;
     private String address;
-    private Set<BookCopies> bookCopies;
-    private Set<BookLoan> bookLoans;
+    private Set<BookCopies> bookCopies = new HashSet<BookCopies>();
+    private Set<BookLoan> bookLoans = new HashSet<BookLoan>();
     
     public Integer getId() {
         return id;

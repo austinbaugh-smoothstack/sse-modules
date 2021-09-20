@@ -1,13 +1,14 @@
 package lms.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Book {
     private Integer id;
     private String title;
     private Publisher publisher;
-    private List<Genre> genres;
-    private List<Author> authors;
+    private List<Genre> genres = new ArrayList<Genre>();
+    private List<Author> authors = new ArrayList<Author>();
     
     public Integer getId() {
         return id;

@@ -25,7 +25,7 @@ public class BorrowerDAO extends BaseDAO<Borrower> {
     }
 
     public BorrowerDAO(final Connection connection) {
-        super(connection);
+        super(connection, "tbl_borrower");
     }
 
     public void insert(final Borrower borrower) throws SQLException {
@@ -44,10 +44,6 @@ public class BorrowerDAO extends BaseDAO<Borrower> {
         final String query = "delete from tbl_borrower where cardNo = ?";
         final Object[] values = { borrower.getCardNumber() };
         save(query, values);
-    }
-
-    public List<Borrower> selectAll() throws SQLException {
-        return read("select * from tbl_borrower", null);
     }
 
     public Borrower selectByCardNumber(final Integer cardNumber) throws SQLException {

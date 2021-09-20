@@ -28,7 +28,7 @@ public class BookCopiesDAO extends BaseDAO<BookCopies> {
     }
 
     public BookCopiesDAO(final Connection connection) {
-        super(connection);
+        super(connection, "tbl_book_copies");
     }
 
     public void insert(final BookCopies bookCopies) throws SQLException {
@@ -58,10 +58,6 @@ public class BookCopiesDAO extends BaseDAO<BookCopies> {
             bookCopies.getBranch().getId(),
         };
         save(query, values);
-    }
-
-    public List<BookCopies> selectAll() throws SQLException {
-        return read("select * from tbl_book_copies", new Object[]{});
     }
 
     public List<BookCopies> selectAllByBranchId(final Integer branchId) throws SQLException {

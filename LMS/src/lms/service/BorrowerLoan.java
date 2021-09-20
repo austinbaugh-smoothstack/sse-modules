@@ -12,7 +12,7 @@ import lms.domain.BookLoan;
 import lms.domain.Borrower;
 import lms.domain.LibraryBranch;
 
-class BorrowerOperation extends MenuItem {
+class BorrowerLoan extends MenuItem {
 
     private String label;
     private MenuType menuType;
@@ -23,24 +23,24 @@ class BorrowerOperation extends MenuItem {
     // used for return operation
     private BookLoan bookLoan = null;
     
-    protected BorrowerOperation(final String label, final MenuType menuType, final Borrower borrower) {
+    protected BorrowerLoan(final String label, final MenuType menuType, final Borrower borrower) {
         this.label = label;
         this.menuType = menuType;
         this.borrower = borrower;
     }
     
     // Constructors for checkout operation
-    protected BorrowerOperation(final String label, final MenuType menuType, final Borrower borrower, final LibraryBranch branch) {
+    protected BorrowerLoan(final String label, final MenuType menuType, final Borrower borrower, final LibraryBranch branch) {
         this(label, menuType, borrower);
         this.branch = branch;
     }
-    protected BorrowerOperation(final String label, final MenuType menuType, final Borrower borrower, final BookCopies bookCopy) {
+    protected BorrowerLoan(final String label, final MenuType menuType, final Borrower borrower, final BookCopies bookCopy) {
         this(label, menuType, borrower);
         this.bookCopy = bookCopy;
     }
     
     // Constructor for return operation
-    protected BorrowerOperation(final String label, final MenuType menuType, final BookLoan bookLoan) {
+    protected BorrowerLoan(final String label, final MenuType menuType, final BookLoan bookLoan) {
         this(label, menuType, bookLoan.getBorrower());
         this.branch = bookLoan.getBranch();
         this.bookLoan = bookLoan;
@@ -63,28 +63,28 @@ class BorrowerOperation extends MenuItem {
                         if(branch == null) {
                             final List<LibraryBranch> branches = service.readAllBranches();
                             for(final LibraryBranch branch : branches) {
-                                menuItems.add(new BorrowerOperation(branch.getName() + ", " + branch.getAddress(), MenuType.BORR_LOAN_CHECKOUT, borrower, branch));
+                                menuItems.add(new BorrowerLoan(branch.getName() + ", " + branch.getAddress(), MenuType.BORR_LOAN_CHECKOUT, borrower, branch));
                             }
                             
-                            menu = new Menu("Pick the Branch you want to check out from:", menuItems, MenuType.BORR_MAIN);
+                            menu = new Menu("Pick the Branch you want to check out from:", menuItems, MenuType.BORR_LOAN);
                         } else {
                             final Set<BookCopies> bookCopies = branch.getBookCopies();
                             for(final BookCopies bookCopy : bookCopies) {
                                 final Book book = bookCopy.getBook();
                                 final List<Author> authors = book.getAuthors();
                                 final String author = authors.isEmpty() ? "(unknown)" : authors.get(0).getName();
-                                menuItems.add(new BorrowerOperation(book.getTitle() + " by " + author, MenuType.BORR_LOAN_CHECKOUT, borrower, bookCopy));
+                                menuItems.add(new BorrowerLoan(book.getTitle() + " by " + author, MenuType.BORR_LOAN_CHECKOUT, borrower, bookCopy));
                             }
                             
-                            menu = new Menu("Pick the Book you want to add copies of, to your branch:", menuItems, MenuType.BORR_MAIN);
+                            menu = new Menu("Pick the Book you want to add copies of, to your branch:", menuItems, MenuType.BORR_LOAN);
                         }
-                        LMS.putMenu(menuType, menu);
-                        LMS.prompt(menuType);
+                        Menu.putMenu(menuType, menu);
+                        Menu.prompt(menuType);
                     } else {
                         service.checkoutBook(borrower, bookCopy);
                         branch = null;
                         bookCopy = null;
-                        LMS.prompt(MenuType.BORR_MAIN);
+                        Menu.prompt(MenuType.BORR_LOAN);
                     }
                 } catch(final SQLException exception) {
                     exception.printStackTrace();
@@ -95,12 +95,12 @@ class BorrowerOperation extends MenuItem {
                     final List<MenuItem> menuItems = new ArrayList<MenuItem>();
                     final Set<BookLoan> bookLoans = borrower.getBookLoans();
                     for(final BookLoan bookLoan : bookLoans) {
-                        menuItems.add(new BorrowerOperation(bookLoan.getBook().getTitle() + " from " + bookLoan.getBranch().getName() + " (Due: " + bookLoan.getDueDate() + ")", MenuType.BORR_LOAN_RETURN, bookLoan));
+                        menuItems.add(new BorrowerLoan(bookLoan.getBook().getTitle() + " from " + bookLoan.getBranch().getName() + " (Due: " + bookLoan.getDueDate() + ")", MenuType.BORR_LOAN_RETURN, bookLoan));
                     }
                     
-                    final Menu menu = new Menu("Pick the book you would like to return:", menuItems, MenuType.BORR_MAIN);
-                    LMS.putMenu(menuType, menu);
-                    LMS.prompt(menuType);
+                    final Menu menu = new Menu("Pick the book you would like to return:", menuItems, MenuType.BORR_LOAN);
+                    Menu.putMenu(menuType, menu);
+                    Menu.prompt(menuType);
                 } else {
                     try {
                         final BorrowerService service = new BorrowerService();
@@ -109,7 +109,7 @@ class BorrowerOperation extends MenuItem {
                         exception.printStackTrace();
                     }
                     bookLoan = null;
-                    LMS.prompt(MenuType.BORR_MAIN);
+                    Menu.prompt(MenuType.BORR_LOAN);
                 }
                 break;
             default:

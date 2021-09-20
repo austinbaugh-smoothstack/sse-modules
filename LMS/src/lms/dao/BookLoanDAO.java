@@ -34,7 +34,7 @@ public class BookLoanDAO extends BaseDAO<BookLoan> {
     }
 
     public BookLoanDAO(final Connection connection) {
-        super(connection);
+        super(connection, "tbl_book_loans");
     }
 
     public void insert(final BookLoan bookLoan) throws SQLException {
@@ -69,10 +69,6 @@ public class BookLoanDAO extends BaseDAO<BookLoan> {
             bookLoan.getBorrower().getCardNumber(),
         };
         save(query, values);
-    }
-
-    public List<BookLoan> selectAll() throws SQLException {
-        return read("select * from tbl_book_loans", new Object[]{});
     }
 
     public List<BookLoan> selectAllByBranchId(final Integer branchId) throws SQLException {

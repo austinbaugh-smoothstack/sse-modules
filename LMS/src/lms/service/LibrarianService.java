@@ -26,12 +26,12 @@ class LibrarianService {
             System.out.println();
             
             System.out.println("Please enter new branch name or enter N/A for no change:");
-            final String branchName = LMS.getInput();
+            final String branchName = ScannerUtil.getInput();
             if(branchName.equalsIgnoreCase("quit")) {
                 return;
             } else if(!branchName.equalsIgnoreCase("n/a")) {
                 System.out.println("Please enter new branch address or enter N/A for no change:");
-                final String branchAddress = LMS.getInput();
+                final String branchAddress = ScannerUtil.getInput();
                 if(branchAddress.equalsIgnoreCase("quit")) {
                     return;
                 } else if(!branchAddress.equalsIgnoreCase("n/a")) {
@@ -79,7 +79,7 @@ class LibrarianService {
             System.out.println();
             
             System.out.println("Enter new number of copies:");
-            final String input = LMS.getInput();
+            final String input = ScannerUtil.getInput();
             if(input.equalsIgnoreCase("quit")) {
                 return;
             } else {
