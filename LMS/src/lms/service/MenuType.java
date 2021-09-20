@@ -18,6 +18,7 @@ enum MenuType {
     
     // Administrator
     ADMIN_MAIN,
+    ADMIN_OPERATION,
     ADMIN_LOAN,
     ADMIN_LOAN_BOOK,
     ADMIN_LOAN_BRANCH,

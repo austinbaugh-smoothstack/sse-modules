@@ -3,7 +3,6 @@ package lms.service;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Collections;
@@ -40,10 +39,11 @@ class BorrowerService {
             
             final Borrower finalBorrower = borrower;
             final Set<BookLoan> bookLoans = bookLoanDao
-                    .selectAllByBorrowerCardNumber(borrower.getCardNumber())
-                    .stream()
-                    .peek(bookCopy -> bookCopy.setBorrower(finalBorrower))
-                    .collect(Collectors.toSet());
+                .selectAllByBorrowerCardNumber(borrower.getCardNumber())
+                .stream()
+                .peek(bookCopy -> bookCopy.setBorrower(finalBorrower))
+                .collect(Collectors.toSet());
+            borrower.setBookLoans(bookLoans);
             
             return finalBorrower;
         } catch (final SQLException exception) {

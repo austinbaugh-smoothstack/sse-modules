@@ -28,10 +28,8 @@ class AdminService {
             final List<Book> books = bookDao.selectAll();
             
             final GenreDAO genreDao = new GenreDAO(connection);
-            final AuthorDAO authorDao = new AuthorDAO(connection);
             for(final Book book : books) {
                 book.setGenres(genreDao.selectAllByBookId(book.getId()));
-                book.setAuthors(authorDao.selectAllByBookId(book.getId()));
             }
             
             return books;

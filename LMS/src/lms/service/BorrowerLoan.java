@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import lms.domain.Author;
 import lms.domain.Book;
 import lms.domain.BookCopies;
 import lms.domain.BookLoan;
@@ -71,8 +70,7 @@ class BorrowerLoan extends MenuItem {
                             final Set<BookCopies> bookCopies = branch.getBookCopies();
                             for(final BookCopies bookCopy : bookCopies) {
                                 final Book book = bookCopy.getBook();
-                                final List<Author> authors = book.getAuthors();
-                                final String author = authors.isEmpty() ? "(unknown)" : authors.get(0).getName();
+                                final String author = book.getAuthor().getName();
                                 menuItems.add(new BorrowerLoan(book.getTitle() + " by " + author, MenuType.BORR_LOAN_CHECKOUT, borrower, bookCopy));
                             }
                             

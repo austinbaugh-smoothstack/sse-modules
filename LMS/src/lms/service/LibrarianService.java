@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import lms.dao.AuthorDAO;
 import lms.dao.BookCopiesDAO;
 import lms.dao.BookDAO;
 import lms.dao.LibraryBranchDAO;
@@ -112,15 +111,7 @@ class LibrarianService {
     List<Book> readAllBooks() throws SQLException {
         Connection connection = connUtil.getConnection();
         try {
-            final BookDAO bookDao = new BookDAO(connection);
-            final List<Book> books = bookDao.selectAll();
-            
-            final AuthorDAO authorDao = new AuthorDAO(connection);
-            for(final Book book : books) {
-                book.setAuthors(authorDao.selectAllByBookId(book.getId()));
-            }
-            
-            return books;
+            return new BookDAO(connection).selectAll();
         } catch (final SQLException exception) {
             System.out.println(exception);
             connection.rollback();

@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import lms.domain.Author;
 import lms.domain.Genre;
 
 class AdminOperation extends MenuItem {
@@ -29,13 +28,11 @@ class AdminOperation extends MenuItem {
                     final Table table = new Table(columnWidths, columns);
                     
                     final List<Object[]> tableValues = service.readAllBooks().stream().map(book -> {
-                        final List<Author> authors = book.getAuthors();
-                        final String author = authors.isEmpty() ? new String() : authors.get(0).getName();
                         
                         final List<Genre> genres = book.getGenres();
                         final String genre = genres.isEmpty() ? new String() : genres.get(0).getName();
                         
-                        return new Object[]{ book.getId(), book.getTitle(), author, genre, book.getPublisher().getName() };
+                        return new Object[]{ book.getId(), book.getTitle(), book.getAuthor().getName(), genre, book.getPublisher().getName() };
                     }).collect(Collectors.toList());
                     
                     table.print(tableValues);

@@ -6,9 +6,9 @@ import java.util.List;
 public class Book {
     private Integer id;
     private String title;
+    private Author author;
     private Publisher publisher;
     private List<Genre> genres = new ArrayList<Genre>();
-    private List<Author> authors = new ArrayList<Author>();
     
     public Integer getId() {
         return id;
@@ -34,10 +34,10 @@ public class Book {
     public void setGenres(final List<Genre> genres) {
         this.genres = genres;
     }
-    public List<Author> getAuthors() {
-        return authors;
+    public Author getAuthor() {
+        return author;
     }
-    public void setAuthors(final List<Author> authors) {
-        this.authors = authors;
+    public void setAuthor(final Author author) {
+        this.author = author;
     }
 }

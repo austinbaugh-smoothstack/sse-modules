@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import lms.domain.Author;
 import lms.domain.Book;
 import lms.domain.Publisher;
 
@@ -19,6 +20,10 @@ public class BookDAO extends BaseDAO<Book> {
             book.setId(resultSet.getInt("bookId"));
             book.setTitle(resultSet.getString("title"));
                 
+            final AuthorDAO authorDao = new AuthorDAO(getConnection());
+            final Author author = authorDao.selectById(resultSet.getInt("authId"));
+            book.setAuthor(author);
+            
             final PublisherDAO publisherDao = new PublisherDAO(getConnection());
             final Publisher publisher = publisherDao.selectById(resultSet.getInt("pubId"));
             book.setPublisher(publisher);

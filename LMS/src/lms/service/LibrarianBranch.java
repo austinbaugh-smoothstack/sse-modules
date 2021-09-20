@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import lms.domain.Author;
 import lms.domain.Book;
 import lms.domain.LibraryBranch;
 
@@ -55,8 +54,7 @@ class LibrarianBranch extends MenuItem {
                         final List<Book> books = service.readAllBooks();
                         final List<MenuItem> menuItems = new ArrayList<MenuItem>();
                         for(final Book book : books) {
-                            final List<Author> authors = book.getAuthors();
-                            final String author = authors.isEmpty() ? "(unknown)" : authors.get(0).getName();
+                            final String author = book.getAuthor().getName();
                             menuItems.add(new LibrarianBranch(book.getTitle() + " by " + author, MenuType.LIB_BRANCH_COPIES, branch, book));
                         }
                         
