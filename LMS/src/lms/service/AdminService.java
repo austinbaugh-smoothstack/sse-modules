@@ -2,9 +2,11 @@ package lms.service;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import lms.dao.AuthorDAO;
 import lms.dao.BookDAO;
@@ -22,6 +24,21 @@ import lms.domain.Publisher;
 class AdminService {
     private ConnectionUtil connUtil = new ConnectionUtil();
     
+    private static Integer selectOption(final List<String> labels) {
+        int index = 1;
+        for(final String label : labels) {
+            System.out.println(index + ") " + label);
+            index++;
+        }
+        System.out.print("Select an author or cancel operation with 'quit': ");
+        final String input = ScannerUtil.getInput();
+        if(input.equals("quit")) {
+            return null;
+        } else {
+            return Integer.parseInt(input) - 1;
+        }
+    }
+    
     void updateBook(final Optional<Integer> id) throws SQLException {
         Connection connection = connUtil.getConnection();
         final BookDAO bookDao = new BookDAO(connection);
@@ -37,32 +54,31 @@ class AdminService {
             book.setTitle(ScannerUtil.getInput());
             
             final List<Author> authors = readAllAuthors();
-            int index = 1;
-            for(final Author author : authors) {
-                System.out.println(index + ") " + author.getName());
-                index++;
-            }
-            System.out.print("Select an author or cancel operation with 'quit': ");
-            final String authorSelection = ScannerUtil.getInput();
-            if(authorSelection.equals("quit")) {
+            final List<String> authorNames = authors.stream().map(author -> author.getName()).collect(Collectors.toList());
+            final Integer authorSelection = AdminService.selectOption(authorNames);
+            if(authorSelection == null) {
                 return;
             }
-            book.setAuthor(authors.get(Integer.parseInt(authorSelection)));
+            book.setAuthor(authors.get(authorSelection));
             
-            // TODO add genres
+            final List<Genre> genres = readAllGenres();
+            final List<String> genreNames = genres.stream().map(genre -> genre.getName()).collect(Collectors.toList());
+            final Integer genreSelection = AdminService.selectOption(genreNames);
+            if(genreSelection == null) {
+                return;
+            }
+            // TODO allow multiple-selection
+            final List<Genre> bookGenres = new ArrayList<Genre>();
+            bookGenres.add(genres.get(genreSelection));
+            book.setGenres(bookGenres);
             
             final List<Publisher> publishers = readAllPublishers();
-            index = 1;
-            for(final Publisher publisher : publishers) {
-                System.out.println(index + ") " + publisher.getName());
-                index++;
-            }
-            System.out.print("Select a publisher or cancel operation with 'quit': ");
-            final String publisherSelection = ScannerUtil.getInput();
-            if(publisherSelection.equals("quit")) {
+            final List<String> publisherNames = publishers.stream().map(publisher -> publisher.getName()).collect(Collectors.toList());
+            final Integer publisherSelection = AdminService.selectOption(publisherNames);
+            if(publisherSelection == null) {
                 return;
             }
-            book.setPublisher(publishers.get(Integer.parseInt(publisherSelection)));
+            book.setPublisher(publishers.get(publisherSelection));
             
             if(id.isPresent()) {
                 bookDao.update(book);
@@ -239,6 +255,10 @@ class AdminService {
         try {
             final BookDAO bookDao = new BookDAO(connection);
             final Book book = bookDao.selectById(id);
+            if(book == null) {
+                System.out.println("Book not found!");
+                return;
+            }
             final String format = "%10s: %s %n";
             
             System.out.format(format, "ID", book.getId());
@@ -261,6 +281,10 @@ class AdminService {
         try {
             final AuthorDAO authorDao = new AuthorDAO(connection);
             final Author author = authorDao.selectById(id);
+            if(author == null) {
+                System.out.println("Author not found!");
+                return;
+            }
             final String format = "%7s: %s %n";
             
             System.out.format(format, "ID", author.getId());
@@ -278,6 +302,10 @@ class AdminService {
         try {
             final GenreDAO genreDao = new GenreDAO(connection);
             final Genre genre = genreDao.selectById(id);
+            if(genre == null) {
+                System.out.println("Genre not found!");
+                return;
+            }
             final String format = "%7s: %s %n";
             
             System.out.format(format, "ID", genre.getId());
@@ -295,6 +323,10 @@ class AdminService {
         try {
             final PublisherDAO publisherDao = new PublisherDAO(connection);
             final Publisher publisher = publisherDao.selectById(id);
+            if(publisher == null) {
+                System.out.println("Publisher not found!");
+                return;
+            }
             final String format = "%10s: %s %n";
             
             System.out.format(format, "ID", publisher.getId());
@@ -314,6 +346,10 @@ class AdminService {
         try {
             final LibraryBranchDAO branchDao = new LibraryBranchDAO(connection);
             final LibraryBranch branch = branchDao.selectById(id);
+            if(branch == null) {
+                System.out.println("Library branch not found!");
+                return;
+            }
             final String format = "%10s: %s %n";
             
             System.out.format(format, "ID", branch.getId());
@@ -332,6 +368,10 @@ class AdminService {
         try {
             final BorrowerDAO borrowerDao = new BorrowerDAO(connection);
             final Borrower borrower = borrowerDao.selectByCardNumber(id);
+            if(borrower == null) {
+                System.out.println("Borrower not found!");
+                return;
+            }
             final String format = "%15s: %s %n";
             
             System.out.format(format, "Card Number", borrower.getCardNumber());
